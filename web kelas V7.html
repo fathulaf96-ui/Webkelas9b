@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#063f91">
+<title>9B Class Website</title>
+<style>
+:root{--navy:#063f91;--navy2:#082d68;--yellow:#ffd800;--orange:#f28c00;--red:#f21d17;--cream:#fff8d9;--white:#fff;--ink:#10233f;--muted:#64748b;--line:#e3eaf4;--radius:20px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Trebuchet MS",Arial,sans-serif;background:#fffbea;color:var(--ink);overflow-x:hidden}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+img{max-width:100%}
+.topbar{position:sticky;top:0;z-index:1000;min-height:70px;background:rgba(255,255,255,.96);border-bottom:3px solid var(--navy);box-shadow:0 3px 12px #063f9110;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px clamp(14px,4%,48px);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:19px;font-weight:1000}
+.brand-badge{width:43px;height:43px;flex-shrink:0;border:3px solid var(--navy);border-radius:13px;background:var(--yellow);display:grid;place-items:center;box-shadow:3px 3px 0 #063f9115;overflow:hidden;padding:3px}
+.brand-badge img{width:100%;height:100%;object-fit:contain;border-radius:7px;display:block}
+.brand-badge img[hidden]{display:none}
+.nav{display:flex;justify-content:center;align-items:center;gap:17px}
+.nav a{color:var(--navy);text-decoration:none;font-size:13px;font-weight:900}
+.nav a:hover{color:var(--red)}
+.edit-btn,.btn,.mini,.save,.tab,.close{transition:transform .18s,background .18s}
+.edit-btn{background:var(--yellow);color:var(--navy);border:2px solid var(--navy);border-radius:12px;padding:10px 15px;font-weight:1000;box-shadow:3px 3px 0 var(--navy);flex-shrink:0}
+.edit-btn:active,.btn:active{transform:translateY(2px)}
+.hero{min-height:650px;position:relative;overflow:hidden;display:grid;place-items:center;padding:65px 20px;background:linear-gradient(#ffcf0022 2px,transparent 2px),linear-gradient(90deg,#f28c0020 2px,transparent 2px),#ffdf43;background-size:44px 44px}
+.hero:before,.hero:after{content:"";position:absolute;inset:22px;border:11px solid var(--navy);border-radius:38px;pointer-events:none}
+.hero:after{inset:38px;border:2px solid #ffffffad;border-radius:28px}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:950px;text-align:center}
+.logo-scene{width:min(230px,58vw);aspect-ratio:1;perspective:900px;margin:0 auto 26px}
+.logo-wrap{width:100%;height:100%;position:relative;border:7px solid var(--navy);border-radius:32px;overflow:hidden;background:var(--yellow);box-shadow:8px 8px 0 #f21d1722;transform-style:preserve-3d;animation:logoIntro 1s ease both,rotateLogo 8s ease-in-out 1s infinite}
+.logo-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-placeholder{width:100%;height:100%;display:grid;place-items:center;font-size:65px;font-weight:1000;color:var(--navy)}
+@keyframes logoIntro{from{opacity:0;transform:rotateY(-80deg) scale(.7)}to{opacity:1;transform:rotateY(0) scale(1)}}
+@keyframes rotateLogo{0%,100%{transform:rotateY(-9deg) rotateX(3deg)}50%{transform:rotateY(9deg) rotateX(-3deg)}}
+.hero h1{font-size:clamp(53px,11vw,108px);line-height:.95;font-weight:1000;letter-spacing:-4px;color:var(--navy);text-shadow:3px 4px 0 var(--yellow);overflow-wrap:anywhere}
+.hero h1 span{color:var(--red)}
+.hero p{max-width:640px;margin:22px auto;color:var(--navy2);font-weight:800;line-height:1.7}
+.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:2px solid var(--navy);border-radius:13px;padding:13px 20px;font-weight:1000}
+.btn-red{background:var(--red);color:white;box-shadow:4px 4px 0 var(--navy)}
+.btn-white{background:white;color:var(--navy);box-shadow:4px 4px 0 var(--navy)}
+section{width:min(1150px,100%);margin:auto;padding:70px 24px;scroll-margin-top:85px}
+.section-tag{display:table;margin:0 auto;background:var(--red);color:white;border:2px solid var(--navy);padding:7px 12px;border-radius:10px;font-size:11px;font-weight:1000;transform:rotate(-1deg)}
+section>h2{text-align:center;font-size:clamp(30px,5vw,42px);color:var(--navy);margin:17px 0 32px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{background:white;border:2px solid var(--navy);border-radius:var(--radius);padding:24px;box-shadow:0 5px 0 #063f910b;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card h3{color:var(--navy);margin-bottom:10px}
+.card p{color:var(--muted);font-size:14px;line-height:1.7;overflow-wrap:anywhere}
+.people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.person{min-width:0;background:white;border:2px solid var(--navy);border-radius:19px;padding:19px 12px;text-align:center;box-shadow:0 5px 0 #f28c0016;transition:transform .2s}
+.person:hover{transform:translateY(-3px)}
+.avatar{width:88px;height:88px;border-radius:50%;border:4px solid var(--yellow);background:#edf2f8;margin:0 auto 12px;display:grid;place-items:center;overflow:hidden;color:var(--navy);font-size:30px;font-weight:1000}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.person h3{font-size:14px;color:var(--navy);overflow-wrap:anywhere}
+.person small{display:block;color:var(--red);font-weight:900;margin-top:6px}
+.students{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.student{min-width:0;background:white;border:2px solid var(--navy);border-radius:12px;padding:13px;font-size:13px;font-weight:900;overflow-wrap:anywhere;box-shadow:0 3px 0 #ffd80040}
+.student span{color:var(--red);margin-right:5px}
+.schedule-wrap{width:100%;overflow-x:auto;border:2px solid var(--navy);border-radius:17px;background:white}
+.schedule{width:100%;min-width:620px;border-collapse:collapse;background:white}
+.schedule th{background:var(--navy);color:white;padding:15px 12px;font-size:13px}
+.schedule td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:center;font-size:13px}
+.schedule tbody tr:nth-child(even){background:#fff8d8}
+.schedule tbody tr:last-child td{border-bottom:0}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.photo{position:relative;height:230px;border:3px solid var(--navy);border-radius:17px;overflow:hidden;background:#f1f5f9;box-shadow:0 4px 0 #ffd80045}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.empty{grid-column:1/-1;padding:35px 20px;text-align:center;border:2px dashed var(--navy);border-radius:18px;background:white;color:var(--muted);line-height:1.8}
+footer{background:var(--navy);color:white;text-align:center;padding:38px 20px;border-top:7px solid var(--yellow)}
+footer strong{color:var(--yellow);font-size:22px;overflow-wrap:anywhere}
+footer p{margin-top:9px;color:#d6e3f7;font-size:13px}
+.modal-bg{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;padding:14px;background:#06152bd9;backdrop-filter:blur(7px)}
+.modal-bg.open{display:flex}
+.modal{width:min(900px,100%);max-height:92vh;overflow:auto;background:#fff;border:3px solid var(--navy);border-radius:23px;padding:22px;box-shadow:0 12px 40px #0003;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:15px;margin-bottom:16px;border-bottom:2px solid #edf0f5}
+.modal-head h2{font-size:24px;color:var(--navy)}
+.close{flex-shrink:0;width:39px;height:39px;border:2px solid var(--navy);border-radius:10px;background:var(--red);color:white;font-size:22px;font-weight:1000}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.tab{border:2px solid var(--navy);border-radius:10px;padding:9px 12px;background:white;color:var(--navy);font-size:12px;font-weight:1000}
+.tab.active{background:var(--yellow)}
+.panel{display:none}
+.panel.active{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{min-width:0;margin:10px 0}
+.field label{display:block;margin-bottom:6px;color:var(--navy);font-size:11px;font-weight:1000}
+.field input,.field textarea,.field select,.row input,.person-edit-grid input{width:100%;min-width:0;border:2px solid #dbe3ef;border-radius:10px;padding:11px;background:white;outline:none;color:var(--ink)}
+.field input:focus,.field textarea:focus,.row input:focus,.person-edit-grid input:focus{border-color:var(--navy)}
+.field textarea{min-height:90px;resize:vertical}
+.file-input{display:block;width:100%;border:2px dashed var(--navy);padding:10px;border-radius:10px;background:white}
+.save{margin-top:12px;background:var(--navy);color:white;border:0;border-radius:11px;padding:12px 16px;font-weight:1000}
+.mini{border:2px solid var(--navy);background:white;color:var(--navy);border-radius:9px;padding:8px 11px;font-weight:900}
+.danger{background:#ffe7e7;color:#a90000}
+.person-edit{border:2px solid #e5eaf1;border-radius:13px;padding:12px;margin-bottom:11px}
+.person-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:9px}
+.person-edit .file-input{margin:8px 0}
+.row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.row input{flex:1}
+.upload-note{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 13px}
+.gallery-edit-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:2px solid #e5eaf1;border-radius:12px;padding:9px;margin:9px 0}
+.gallery-edit-item img{width:65px;height:52px;border-radius:8px;object-fit:cover}
+.gallery-edit-item span{flex:1;font-size:12px;font-weight:900;min-width:55px}
+.gallery-edit-item .mini{font-size:11px;padding:7px}
+.toast{position:fixed;z-index:7000;left:50%;bottom:20px;transform:translateX(-50%);max-width:90%;background:var(--navy);color:white;border:2px solid var(--yellow);border-radius:12px;padding:12px 17px;font-weight:900;text-align:center;display:none;box-shadow:0 5px 20px #0002}
+@media(max-width:800px){.nav{display:none}.grid{grid-template-columns:1fr}.people,.students{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.topbar{min-height:62px;padding:8px 12px}.brand{font-size:15px}.brand-badge{width:50px;height:50px}.edit-btn{padding:9px 11px;font-size:12px}.hero{min-height:590px;padding:48px 18px}.hero:before{inset:12px;border-width:7px;border-radius:24px}.hero:after{inset:24px;border-radius:18px}.hero h1{letter-spacing:-2px}.logo-scene{width:min(195px,55vw)}section{padding:48px 16px}.people{gap:10px}.person{padding:14px 8px}.avatar{width:72px;height:72px}.gallery{grid-template-columns:1fr}.photo{height:220px}.form-grid,.person-edit-grid{grid-template-columns:1fr}.modal{padding:15px;border-radius:18px}.modal-head h2{font-size:19px}.tabs{gap:6px}.tab{padding:8px 9px}.gallery-edit-item{gap:7px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-badge" id="brandBadge">
+      <span id="brandLogoText">9B</span>
+      <img id="brandLogoImage" alt="Logo kelas" hidden>
+    </div>
+    <span id="navTitle">9B CLASS</span>
+  </div>
+  <nav class="nav">
+    <a href="#profil">Profil</a><a href="#pengurus">Pengurus</a>
+    <a href="#siswa">Siswa</a><a href="#jadwal">Jadwal</a><a href="#galeri">Galeri</a>
+  </nav>
+  <button class="edit-btn" onclick="openEditor()">⚙ EDIT</button>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="logo-scene">
+      <div class="logo-wrap" id="logoWrap">
+        <div class="logo-placeholder" id="logoPlaceholder">9B</div>
+        <img id="mainLogo" alt="Logo kelas" hidden>
+      </div>
+    </div>
+    <h1>CLASS <span id="heroClass">9B</span></h1>
+    <p id="heroMotto">Satu kelas, banyak cerita. Satu perjalanan, banyak kenangan.</p>
+    <div class="hero-actions">
+      <a class="btn btn-red" href="#profil">Lihat Profil</a>
+      <a class="btn btn-white" href="#galeri">Kenangan Kelas</a>
+    </div>
+  </div>
+</section>
+
+<section id="profil">
+  <span class="section-tag">CLASS PROFILE</span><h2>Profil Kelas</h2>
+  <div class="grid">
+    <div class="card"><h3>🏫 Sekolah</h3><p id="schoolText"></p></div>
+    <div class="card"><h3>📚 Kelas</h3><p id="classText"></p></div>
+    <div class="card"><h3>📅 Tahun Pelajaran</h3><p id="yearText"></p></div>
+  </div>
+</section>
+<section id="pengurus">
+  <span class="section-tag">CLASS ORGANIZATION</span><h2>Pengurus Kelas</h2>
+  <div id="people" class="people"></div>
+</section>
+<section id="siswa">
+  <span class="section-tag">CLASS MEMBERS</span><h2>Daftar Siswa</h2>
+  <div id="students" class="students"></div>
+</section>
+<section id="jadwal">
+  <span class="section-tag">CLASS SCHEDULE</span><h2>Jadwal Pelajaran</h2>
+  <div class="schedule-wrap"><table class="schedule" id="scheduleTable"></table></div>
+</section>
+<section id="galeri">
+  <span class="section-tag">CLASS MEMORIES</span><h2>Galeri Kelas</h2>
+  <div id="gallery" class="gallery"></div>
+</section>
+<footer>
+  <strong id="footerTitle">9B • SMPN 1 TORJUN</strong>
+  <p id="footerMotto">One class. One story. Many memories.</p>
+</footer>
+
+<div class="modal-bg" id="loginModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-head"><h2>🔐 Akses Editor</h2><button class="close" onclick="closeLogin()">×</button></div>
+    <p class="upload-note">Masukkan password untuk mengedit website kelas.</p>
+    <form onsubmit="unlockEditor(event)">
+      <div class="field"><label>PASSWORD</label><input id="editorPassword" type="password" placeholder="Masukkan password" required autocomplete="current-password"></div>
+      <button class="save" type="submit">Buka Editor →</button>
+    </form>
+    <p id="loginError" style="color:#c00;font-size:12px;margin-top:12px"></p>
+  </div>
+</div>
+
+<div class="modal-bg" id="editor">
+  <div class="modal">
+    <div class="modal-head"><h2>⚙ Edit Website</h2><button class="close" onclick="closeEditor()">×</button></div>
+    <div class="tabs">
+      <button class="tab active" onclick="tab('umum',this)">Umum</button>
+      <button class="tab" onclick="tab('pengurusEdit',this)">Pengurus</button>
+      <button class="tab" onclick="tab('siswaEdit',this)">Siswa</button>
+      <button class="tab" onclick="tab('jadwalEdit',this)">Jadwal</button>
+      <button class="tab" onclick="tab('galeriEdit',this)">Galeri</button>
+    </div>
+    <div id="umum" class="panel active">
+      <div class="form-grid">
+        <div class="field"><label>NAMA SEKOLAH</label><input id="fSchool"></div>
+        <div class="field"><label>NAMA KELAS</label><input id="fClass"></div>
+        <div class="field"><label>TAHUN PELAJARAN</label><input id="fYear"></div>
+        <div class="field"><label>UPLOAD LOGO / FOTO UTAMA</label><input class="file-input" id="fLogo" type="file" accept="image/*"></div>
+      </div>
+      <div class="field"><label>MOTTO KELAS</label><textarea id="fMotto"></textarea></div>
+      <button class="save" onclick="saveGeneral()">Simpan Perubahan</button>
+      <p class="upload-note">Logo utama juga akan menjadi logo kecil di navbar. Foto bisa dipilih dari galeri pada tab Galeri.</p>
+    </div>
+    <div id="pengurusEdit" class="panel">
+      <div id="leaderEditor"></div>
+      <button class="mini" onclick="addLeader()">+ Tambah Jabatan</button>
+      <button class="save" onclick="saveLeaders()">Simpan Pengurus</button>
+    </div>
+    <div id="siswaEdit" class="panel">
+      <div id="studentEditor"></div>
+      <button class="mini" onclick="addStudent()">+ Tambah Siswa</button>
+      <button class="save" onclick="saveStudents()">Simpan Daftar Siswa</button>
+    </div>
+    <div id="jadwalEdit" class="panel">
+      <p class="upload-note">Edit nama hari dan empat kolom pelajaran.</p>
+      <div id="scheduleEditor"></div>
+      <button class="mini" onclick="addScheduleDay()">+ Tambah Hari</button>
+      <button class="save" onclick="saveSchedule()">Simpan Jadwal</button>
+    </div>
+    <div id="galeriEdit" class="panel">
+      <div class="field"><label>TAMBAH FOTO GALERI (BISA BANYAK)</label><input class="file-input" id="galleryFiles" type="file" accept="image/*" multiple></div>
+      <p class="upload-note">Pilih beberapa foto sekaligus. Foto baru akan ditambahkan tanpa menghapus foto lama. Tekan Jadikan Logo untuk menggunakan foto galeri sebagai logo kelas.</p>
+      <button class="save" onclick="saveGallery()">＋ Simpan Foto Terpilih</button>
+      <div id="galleryEditor" style="margin-top:15px"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const DEFAULT={
+  school:"UPTD SMPN 1 TORJUN",className:"9B",year:"2026 / 2027",
+  motto:"Satu kelas, banyak cerita. Satu perjalanan, banyak kenangan.",
+  mainLogo:"",
+  homeroom:{name:"Nama Wali Kelas",role:"Wali Kelas",photo:""},
+  leaders:[
+    {name:"Nama Ketua",role:"Ketua Kelas",photo:""},
+    {name:"Nama Wakil",role:"Wakil Ketua",photo:""},
+    {name:"Nama Sekretaris",role:"Sekretaris",photo:""},
+    {name:"Nama Bendahara",role:"Bendahara",photo:""},
+    {name:"Nama Seksi Kebersihan",role:"Kebersihan",photo:""},
+    {name:"Nama Seksi Humas",role:"Humas",photo:""},
+    {name:"Nama Seksi IT",role:"Teknologi",photo:""}
+  ],
+  students:Array.from({length:30},(_,i)=>"Nama Siswa "+(i+1)),
+  schedule:[
+    {day:"Senin",subjects:["—","—","—","—"]},
+    {day:"Selasa",subjects:["—","—","—","—"]},
+    {day:"Rabu",subjects:["—","—","—","—"]},
+    {day:"Kamis",subjects:["—","—","—","—"]},
+    {day:"Jumat",subjects:["—","—","—","—"]}
+  ],
+  gallery:[]
+};
+
+const KEY="kelas9b_data_final_v2";
+const PASSWORD="1248";
+const DB_NAME="kelas9b_image_storage";
+const DB_VERSION=1;
+const DB_STORE="website";
+const DB_KEY="mainData";
+
+function clone(value){return JSON.parse(JSON.stringify(value))}
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    if(!("indexedDB" in window)){
+      reject(new Error("IndexedDB tidak tersedia"));
+      return;
+    }
+    const request=indexedDB.open(DB_NAME,DB_VERSION);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      if(!db.objectStoreNames.contains(DB_STORE))db.createObjectStore(DB_STORE);
+    };
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error||new Error("Gagal membuka database"));
+  });
+}
+
+async function dbGet(key){
+  const db=await openDB();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(DB_STORE,"readonly");
+    const request=tx.objectStore(DB_STORE).get(key);
+    request.onsuccess=()=>resolve(request.result);
+    request.onerror=()=>reject(request.error);
+    tx.oncomplete=()=>db.close();
+    tx.onerror=()=>db.close();
+  });
+}
+
+async function dbSet(key,value){
+  const db=await openDB();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(DB_STORE,"readwrite");
+    tx.objectStore(DB_STORE).put(value,key);
+    tx.oncomplete=()=>{db.close();resolve(true)};
+    tx.onerror=()=>{const e=tx.error;db.close();reject(e||new Error("Gagal menyimpan"))};
+    tx.onabort=()=>{const e=tx.error;db.close();reject(e||new Error("Penyimpanan dibatalkan"))};
+  });
+}
+
+/* Kompresi gambar sebelum disimpan */
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    if(!file||!file.type.startsWith("image/")){
+      reject(new Error("File bukan gambar"));
+      return;
+    }
+
+    const objectURL=URL.createObjectURL(file);
+    const img=new Image();
+
+    img.onload=()=>{
+      try{
+        const maxSize=1280;
+        const ratio=Math.min(1,maxSize/Math.max(img.naturalWidth,img.naturalHeight));
+        const width=Math.max(1,Math.round(img.naturalWidth*ratio));
+        const height=Math.max(1,Math.round(img.naturalHeight*ratio));
+        const canvas=document.createElement("canvas");
+        canvas.width=width;
+        canvas.height=height;
+        const ctx=canvas.getContext("2d");
+        if(!ctx)throw new Error("Canvas tidak tersedia");
+
+        ctx.drawImage(img,0,0,width,height);
+        let result=canvas.toDataURL("image/webp",0.80);
+
+        if(!result.startsWith("data:image/webp")){
+          const jpg=document.createElement("canvas");
+          jpg.width=width;jpg.height=height;
+          const jctx=jpg.getContext("2d");
+          if(!jctx)throw new Error("Canvas tidak tersedia");
+          jctx.fillStyle="#fff";
+          jctx.fillRect(0,0,width,height);
+          jctx.drawImage(img,0,0,width,height);
+          result=jpg.toDataURL("image/jpeg",0.80);
+          jpg.width=jpg.height=1;
+        }
+
+        if(result.length>1500000){
+          result=canvas.toDataURL("image/webp",0.60);
+          if(!result.startsWith("data:image/webp")){
+            result=canvas.toDataURL("image/jpeg",0.60);
+          }
+        }
+
+        URL.revokeObjectURL(objectURL);
+        canvas.width=canvas.height=1;
+        resolve(result);
+      }catch(error){
+        URL.revokeObjectURL(objectURL);
+        reject(error);
+      }
+    };
+
+    img.onerror=()=>{
+      URL.revokeObjectURL(objectURL);
+      reject(new Error("Gagal membaca gambar"));
+    };
+    img.src=objectURL;
+  });
+}
+
+async function compressExistingImage(src){
+  if(typeof src!=="string"||!src.startsWith("data:image/"))return src||"";
+  try{
+    const response=await fetch(src);
+    const blob=await response.blob();
+    if(blob.size<180000)return src;
+    return await compressImage(new File([blob],"foto-migrasi",{type:blob.type||"image/jpeg"}));
+  }catch(error){
+    return src;
+  }
+}
+
+async function compressExistingPhotos(data){
+  if(data.mainLogo)data.mainLogo=await compressExistingImage(data.mainLogo);
+  if(data.homeroom?.photo)data.homeroom.photo=await compressExistingImage(data.homeroom.photo);
+
+  if(Array.isArray(data.leaders)){
+    for(const person of data.leaders){
+      if(person.photo)person.photo=await compressExistingImage(person.photo);
+    }
+  }
+
+  if(Array.isArray(data.gallery)){
+    for(let i=0;i<data.gallery.length;i++){
+      data.gallery[i]=await compressExistingImage(data.gallery[i]);
+    }
+  }
+  return data;
+}
+
+function normalizeData(data){
+  data=data||{};
+  return {
+    ...clone(DEFAULT),...data,
+    homeroom:{...DEFAULT.homeroom,...(data.homeroom||{})},
+    leaders:Array.isArray(data.leaders)?data.leaders:clone(DEFAULT.leaders),
+    students:Array.isArray(data.students)?data.students:clone(DEFAULT.students),
+    schedule:Array.isArray(data.schedule)?data.schedule:clone(DEFAULT.schedule),
+    gallery:Array.isArray(data.gallery)?data.gallery:[]
+  };
+}
+
+/* Migrasi otomatis data lama */
+async function loadInitialData(){
+  const savedDB=await dbGet(DB_KEY);
+  if(savedDB)return normalizeData(savedDB);
+
+  let oldData=null;
+  try{
+    const saved=localStorage.getItem(KEY);
+    if(saved)oldData=JSON.parse(saved);
+  }catch(error){
+    console.warn("Data lama tidak bisa dibaca:",error);
+  }
+
+  if(oldData){
+    const migrated=normalizeData(oldData);
+    await compressExistingPhotos(migrated);
+    await dbSet(DB_KEY,migrated);
+
+    try{localStorage.removeItem(KEY)}catch(error){}
+    return migrated;
+  }
+
+  return clone(DEFAULT);
+}
+
+let DATA=clone(DEFAULT);
+let toastTimer;
+
+async function persist(){
+  try{
+    await dbSet(DB_KEY,DATA);
+    showToast("Perubahan berhasil disimpan ✓");
+    return true;
+  }catch(error){
+    console.error("Gagal menyimpan:",error);
+    showToast("Penyimpanan gagal. Coba lagi.");
+    return false;
+  }
+}
+
+function esc(value){
+  return String(value??"").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+
+function showToast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.style.display="block";
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.style.display="none",2600);
+}
+
+function safeImage(src){
+  return typeof src==="string"&&(src.startsWith("data:image/")||src.startsWith("blob:"));
+}
+
+/* Render website */
+function render(){
+  document.title=DATA.className+" — Class Website";
+  document.getElementById("navTitle").textContent=DATA.className+" CLASS";
+  document.getElementById("heroClass").textContent=DATA.className;
+  document.getElementById("heroMotto").textContent=DATA.motto;
+  document.getElementById("schoolText").textContent=DATA.school;
+  document.getElementById("classText").textContent=DATA.className;
+  document.getElementById("yearText").textContent=DATA.year;
+  document.getElementById("footerTitle").textContent=DATA.className+" • "+DATA.school;
+  document.getElementById("footerMotto").textContent=DATA.motto;
+
+  const logo=document.getElementById("mainLogo");
+  const placeholder=document.getElementById("logoPlaceholder");
+  const brandText=document.getElementById("brandLogoText");
+  const brandImage=document.getElementById("brandLogoImage");
+
+  if(safeImage(DATA.mainLogo)){
+    logo.src=DATA.mainLogo;logo.hidden=false;placeholder.hidden=true;
+    brandImage.src=DATA.mainLogo;brandImage.hidden=false;brandText.hidden=true;
+  }else{
+    logo.removeAttribute("src");logo.hidden=true;placeholder.hidden=false;
+    placeholder.textContent=DATA.className;
+    brandImage.removeAttribute("src");brandImage.hidden=true;
+    brandText.hidden=false;brandText.textContent=DATA.className;
+  }
+
+  renderPeople();
+  renderStudents();
+  renderSchedule();
+  renderGallery();
+}
+
+function renderPeople(){
+  const container=document.getElementById("people");
+  container.innerHTML="";
+  [DATA.homeroom,...DATA.leaders].forEach(person=>{
+    const card=document.createElement("div");
+    card.className="person";
+    const avatar=document.createElement("div");
+    avatar.className="avatar";
+
+    if(safeImage(person.photo)){
+      const img=document.createElement("img");
+      img.src=person.photo;img.alt=person.name;
+      avatar.appendChild(img);
+    }else avatar.textContent="👤";
+
+    const name=document.createElement("h3");
+    name.textContent=person.name;
+    const role=document.createElement("small");
+    role.textContent=person.role;
+    card.append(avatar,name,role);
+    container.appendChild(card);
+  });
+}
+
+function renderStudents(){
+  const container=document.getElementById("students");
+  container.innerHTML="";
+  if(!DATA.students.length){
+    container.innerHTML='<div class="empty">Belum ada siswa yang ditambahkan.</div>';
+    return;
+  }
+  DATA.students.forEach((name,index)=>{
+    const item=document.createElement("div");
+    item.className="student";
+    const number=document.createElement("span");
+    number.textContent=String(index+1).padStart(2,"0")+".";
+    item.append(number,document.createTextNode(" "+name));
+    container.appendChild(item);
+  });
+}
+
+function renderSchedule(){
+  const table=document.getElementById("scheduleTable");
+  table.innerHTML=`<thead><tr><th>Hari</th><th>Pelajaran 1</th><th>Pelajaran 2</th><th>Pelajaran 3</th><th>Pelajaran 4</th></tr></thead><tbody></tbody>`;
+  const tbody=table.querySelector("tbody");
+
+  if(!DATA.schedule.length){
+    const tr=document.createElement("tr");
+    const td=document.createElement("td");
+    td.colSpan=5;td.textContent="Jadwal belum tersedia.";
+    tr.appendChild(td);tbody.appendChild(tr);return;
+  }
+
+  DATA.schedule.forEach(item=>{
+    const tr=document.createElement("tr");
+    const subjects=Array.isArray(item.subjects)?item.subjects:[];
+    [item.day,...Array.from({length:4},(_,i)=>subjects[i]||"—")].forEach(value=>{
+      const td=document.createElement("td");
+      td.textContent=value;tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function renderGallery(){
+  const container=document.getElementById("gallery");
+  container.innerHTML="";
+  const photos=DATA.gallery.filter(safeImage);
+
+  if(!photos.length){
+    container.innerHTML='<div class="empty">📸 Belum ada foto galeri.<br>Tambahkan foto melalui menu Edit.</div>';
+    return;
+  }
+
+  photos.forEach(src=>{
+    const frame=document.createElement("div");
+    frame.className="photo";
+    const img=document.createElement("img");
+    img.src=src;img.alt="Foto kenangan kelas";img.loading="lazy";
+    frame.appendChild(img);container.appendChild(frame);
+  });
+}
+
+/* Login dan editor */
+function openEditor(){
+  document.getElementById("editorPassword").value="";
+  document.getElementById("loginError").textContent="";
+  document.getElementById("loginModal").classList.add("open");
+  setTimeout(()=>document.getElementById("editorPassword").focus(),100);
+}
+function closeLogin(){document.getElementById("loginModal").classList.remove("open")}
+
+function unlockEditor(event){
+  event.preventDefault();
+  if(document.getElementById("editorPassword").value!==PASSWORD){
+    document.getElementById("loginError").textContent="Password salah. Coba lagi.";
+    return;
+  }
+
+  closeLogin();
+  document.getElementById("editor").classList.add("open");
+  document.getElementById("fSchool").value=DATA.school;
+  document.getElementById("fClass").value=DATA.className;
+  document.getElementById("fYear").value=DATA.year;
+  document.getElementById("fMotto").value=DATA.motto;
+  document.getElementById("fLogo").value="";
+  document.getElementById("galleryFiles").value="";
+  renderLeaderEditor();renderStudentEditor();renderScheduleEditor();renderGalleryEditor();
+  tab("umum",document.querySelector("#editor .tab"));
+}
+function closeEditor(){document.getElementById("editor").classList.remove("open")}
+
+document.getElementById("loginModal").addEventListener("click",event=>{
+  if(event.target.id==="loginModal")closeLogin();
+});
+document.getElementById("editor").addEventListener("click",event=>{
+  if(event.target.id==="editor")closeEditor();
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){closeLogin();closeEditor()}
+});
+
+function tab(id,button){
+  document.querySelectorAll("#editor .panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll("#editor .tab").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  button.classList.add("active");
+}
+
+/* Data umum dan logo */
+async function saveGeneral(){
+  const input=document.getElementById("fLogo");
+  const previous=clone(DATA);
+
+  try{
+    let newLogo=DATA.mainLogo;
+    if(input.files[0]){
+      if(!input.files[0].type.startsWith("image/")){
+        showToast("Pilih file gambar yang valid.");return;
+      }
+      newLogo=await compressImage(input.files[0]);
+    }
+
+    DATA.school=document.getElementById("fSchool").value.trim()||"UPTD SMPN 1 TORJUN";
+    DATA.className=document.getElementById("fClass").value.trim()||"9B";
+    DATA.year=document.getElementById("fYear").value.trim();
+    DATA.motto=document.getElementById("fMotto").value.trim();
+    DATA.mainLogo=newLogo;
+
+    if(await persist()){render();input.value=""}
+    else DATA=previous;
+  }catch(error){DATA=previous;showToast("Gagal memproses gambar.")}
+}
+
+/* Pengurus */
+function renderLeaderEditor(){
+  const container=document.getElementById("leaderEditor");
+  const people=[DATA.homeroom,...DATA.leaders];
+
+  container.innerHTML=people.map((person,index)=>`
+    <div class="person-edit">
+      <div class="person-edit-grid">
+        <input data-leader="${index}" data-key="name" value="${esc(person.name)}" placeholder="Nama">
+        <input data-leader="${index}" data-key="role" value="${esc(person.role)}" placeholder="Jabatan">
+      </div>
+      <label class="upload-note">Foto profil</label>
+      <input class="file-input" data-photo="${index}" type="file" accept="image/*">
+      ${safeImage(person.photo)?`<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><img src="${person.photo}" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:50%"><button class="mini danger" onclick="removeLeaderPhoto(${index})">Hapus Foto</button></div>`:""}
+      ${index>0?`<button class="mini danger" style="margin-top:8px" onclick="removeLeader(${index})">Hapus Jabatan</button>`:""}
+    </div>`).join("");
+}
+
+async function saveLeaders(){
+  const previous=clone(DATA);
+  const people=[DATA.homeroom,...DATA.leaders];
+
+  document.querySelectorAll("[data-leader]").forEach(input=>{
+    const person=people[Number(input.dataset.leader)];
+    if(person)person[input.dataset.key]=input.value.trim()||(input.dataset.key==="name"?"Nama":"Jabatan");
+  });
+
+  try{
+    for(const input of document.querySelectorAll("[data-photo]")){
+      if(input.files[0]&&input.files[0].type.startsWith("image/")){
+        people[Number(input.dataset.photo)].photo=await compressImage(input.files[0]);
+      }
+    }
+
+    DATA.homeroom=people[0];
+    DATA.leaders=people.slice(1);
+
+    if(await persist()){render();renderLeaderEditor()}
+    else{DATA=previous;renderLeaderEditor()}
+  }catch(error){
+    DATA=previous;renderLeaderEditor();showToast("Foto gagal diproses.");
+  }
+}
+
+async function addLeader(){
+  const previous=clone(DATA);
+  DATA.leaders.push({name:"Nama Pengurus Baru",role:"Jabatan Baru",photo:""});
+  if(await persist())renderLeaderEditor();
+  else{DATA=previous;renderLeaderEditor()}
+}
+
+async function removeLeader(index){
+  if(index<1||index>DATA.leaders.length)return;
+  const previous=clone(DATA);
+  DATA.leaders.splice(index-1,1);
+  if(await persist()){renderLeaderEditor();renderPeople()}
+  else{DATA=previous;renderLeaderEditor()}
+}
+
+async function removeLeaderPhoto(index){
+  const previous=clone(DATA);
+  if(index===0)DATA.homeroom.photo="";
+  else if(DATA.leaders[index-1])DATA.leaders[index-1].photo="";
+  if(await persist()){renderLeaderEditor();renderPeople()}
+  else{DATA=previous;renderLeaderEditor()}
+}
+
+/* Siswa */
+function renderStudentEditor(){
+  const container=document.getElementById("studentEditor");
+  container.innerHTML=DATA.students.map((student,index)=>`
+    <div class="row"><input data-student="${index}" value="${esc(student)}" placeholder="Nama siswa"><button class="mini danger" onclick="removeStudent(${index})">×</button></div>`).join("");
+  if(!DATA.students.length)container.innerHTML='<p class="upload-note">Belum ada siswa.</p>';
+}
+
+async function addStudent(){
+  const previous=clone(DATA);
+  DATA.students.push("Nama Siswa Baru");
+  if(await persist())renderStudentEditor();
+  else{DATA=previous;renderStudentEditor()}
+}
+
+async function removeStudent(index){
+  const previous=clone(DATA);
+  DATA.students.splice(index,1);
+  if(await persist()){renderStudents();renderStudentEditor()}
+  else{DATA=previous;renderStudentEditor()}
+}
+
+async function saveStudents(){
+  const previous=clone(DATA);
+  DATA.students=[...document.querySelectorAll("[data-student]")].map(input=>input.value.trim()||"Nama Siswa");
+  if(await persist()){renderStudents();renderStudentEditor()}
+  else{DATA=previous;renderStudentEditor()}
+}
+
+/* Jadwal */
+function renderScheduleEditor(){
+  const container=document.getElementById("scheduleEditor");
+  container.innerHTML=DATA.schedule.map((item,index)=>`
+    <div class="person-edit">
+      <div class="field"><label>NAMA HARI</label><input data-day="${index}" value="${esc(item.day)}" placeholder="Nama hari"></div>
+      <div class="form-grid">${Array.from({length:4},(_,col)=>`
+        <div class="field"><label>PELAJARAN ${col+1}</label><input data-subject="${index}" data-col="${col}" value="${esc(item.subjects?.[col]||"—")}" placeholder="Nama pelajaran"></div>`).join("")}</div>
+      <button class="mini danger" onclick="removeScheduleDay(${index})">Hapus Hari</button>
+    </div>`).join("");
+  if(!DATA.schedule.length)container.innerHTML='<div class="empty">Belum ada hari. Tekan Tambah Hari.</div>';
+}
+
+async function addScheduleDay(){
+  const previous=clone(DATA);
+  DATA.schedule.push({day:"Hari Baru",subjects:["—","—","—","—"]});
+  if(await persist())renderScheduleEditor();
+  else{DATA=previous;renderScheduleEditor()}
+}
+
+async function removeScheduleDay(index){
+  const previous=clone(DATA);
+  DATA.schedule.splice(index,1);
+  if(await persist()){renderScheduleEditor();renderSchedule()}
+  else{DATA=previous;renderScheduleEditor()}
+}
+
+async function saveSchedule(){
+  const previous=clone(DATA);
+  const updated=DATA.schedule.map(item=>({
+    day:item.day,
+    subjects:Array.from({length:4},(_,i)=>item.subjects?.[i]||"—")
+  }));
+
+  document.querySelectorAll("[data-day]").forEach(input=>{
+    if(updated[Number(input.dataset.day)])updated[Number(input.dataset.day)].day=input.value.trim()||"Hari";
+  });
+  document.querySelectorAll("[data-subject]").forEach(input=>{
+    const day=Number(input.dataset.subject),col=Number(input.dataset.col);
+    if(updated[day])updated[day].subjects[col]=input.value.trim()||"—";
+  });
+
+  DATA.schedule=updated;
+  if(await persist()){renderSchedule();renderScheduleEditor()}
+  else{DATA=previous;renderScheduleEditor()}
+}
+
+/* Galeri: upload banyak foto */
+async function saveGallery(){
+  const input=document.getElementById("galleryFiles");
+  const files=Array.from(input.files);
+
+  if(!files.length){showToast("Pilih satu atau beberapa foto terlebih dahulu.");return}
+
+  const imageFiles=files.filter(file=>file.type.startsWith("image/"));
+  if(!imageFiles.length){showToast("File yang dipilih bukan gambar.");return}
+
+  const previous=clone(DATA);
+
+  try{
+    showToast("Memproses dan mengompres foto...");
+    const photos=[];
+    for(const file of imageFiles)photos.push(await compressImage(file));
+
+    DATA.gallery.push(...photos);
+
+    if(await persist()){
+      input.value="";
+      renderGallery();
+      renderGalleryEditor();
+      showToast(photos.length+" foto berhasil ditambahkan ✓");
+    }else{
+      DATA=previous;renderGalleryEditor();
+    }
+  }catch(error){
+    DATA=previous;renderGalleryEditor();
+    showToast("Foto gagal diproses. Coba gambar lain.");
+  }
+}
+
+function renderGalleryEditor(){
+  const container=document.getElementById("galleryEditor");
+  const photos=DATA.gallery.filter(safeImage);
+
+  if(!photos.length){
+    container.innerHTML='<p class="upload-note">Belum ada foto galeri.</p>';
+    return;
+  }
+
+  container.innerHTML=photos.map((src,index)=>`
+    <div class="gallery-edit-item">
+      <img src="${src}" alt="Foto ${index+1}">
+      <span>Foto ${index+1}${DATA.mainLogo===src?" • LOGO AKTIF":""}</span>
+      <button class="mini" onclick="setGalleryLogo(${index})">${DATA.mainLogo===src?"Logo Aktif":"Jadikan Logo"}</button>
+      <button class="mini danger" onclick="deleteGallery(${index})">Hapus</button>
+    </div>`).join("");
+}
+
+/* Pilih foto galeri sebagai logo */
+async function setGalleryLogo(index){
+  const photos=DATA.gallery.filter(safeImage);
+  const photo=photos[index];
+  if(!photo){showToast("Foto tidak ditemukan.");return}
+
+  const previous=DATA.mainLogo;
+  DATA.mainLogo=photo;
+
+  if(await persist()){
+    render();renderGalleryEditor();
+    showToast("Logo kelas berhasil diganti!");
+  }else{
+    DATA.mainLogo=previous;
+  }
+}
+
+async function deleteGallery(index){
+  const photos=DATA.gallery.filter(safeImage);
+  const photo=photos[index];
+  if(!photo)return;
+
+  const previous=clone(DATA);
+  const originalIndex=DATA.gallery.indexOf(photo);
+  if(originalIndex<0)return;
+
+  DATA.gallery.splice(originalIndex,1);
+
+  if(await persist()){
+    renderGallery();
+    renderGalleryEditor();
+    showToast("Foto galeri dihapus.");
+  }else{
+    DATA=previous;renderGalleryEditor();
+  }
+}
+
+/* Mulai: muat database sebelum render */
+(async function init(){
+  try{
+    DATA=await loadInitialData();
+    render();
+  }catch(error){
+    console.error("Gagal memuat database:",error);
+    showToast("Database tidak bisa dibuka. Coba gunakan browser lain.");
+    DATA=clone(DEFAULT);
+    render();
+  }
+})();
+</script>
+</body>
+</html>
